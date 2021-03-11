@@ -1,0 +1,28 @@
+{% extends 'web/base.html'%}
+{% block title %}{{movies.title}}{% endblock %}
+{% load widget_tweaks %}
+
+{% block body %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group row">
+      <label for="{{fiel.auto_id}}" class="col-sm-3 col-form-control">
+        {{ field.label }}
+        {% for error in field.errors %}
+        <small id="{{ field.auto_id }}" class="text-denger">{{error}}</small>
+        {% endfor %}
+      </label>
+
+      <div class="col-sm-9">
+        {{ field|add_class:"form-control"}}
+        {% if field.help_text %}
+        <small>{{ field.help_text|safe}}</small>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+    <input type="submit" name="" value="Submit" class="btn btn-success">
+  </form>
+
+{% endblock %}
